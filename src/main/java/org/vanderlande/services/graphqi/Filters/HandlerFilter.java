@@ -5,4 +5,6 @@ import lombok.Data;
 @Data
 public class HandlerFilter {
     private FilterField id;
+    private FilterField designator;
+    private FilterField name;
 }

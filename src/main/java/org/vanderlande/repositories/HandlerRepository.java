@@ -25,6 +25,10 @@ public class HandlerRepository implements PanacheRepository<Handler> {
         Predicate predicate = null;
         if (filter.getId() != null)
             predicate = filter.getId().generateCriteria(builder, root.get("id"));
+        if (filter.getName() != null)
+            predicate = filter.getName().generateCriteria(builder, root.get("name"));
+        if (filter.getDesignator() != null)
+            predicate = filter.getDesignator().generateCriteria(builder, root.get("designator"));
 
         if (predicate != null)
             criteriaQuery.where(predicate);
