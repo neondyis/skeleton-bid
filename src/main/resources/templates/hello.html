@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kappa</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+<body>
+
+<p>
+    Hello {name}!
+</p>
+<ul>
+{#for item in items}
+    <li>{item.PPL_ID} {item.PPL_NAME} </li>
+{/for}
+</ul>
+
+<div id="example-table"></div>
+
+</body>
+</html>
+<script>
+    const data = `{#each items} {it} {/each}
+</script>
+{|
+<script>
+    //define column header menu as column visibility toggle
+    var headerMenu = function(){
+        var menu = [];
+        var columns = this.getColumns();
+
+        for(let column of columns){
+
+            //create checkbox element using font awesome icons
+            let icon = document.createElement("i");
+            icon.classList.add("fas");
+            icon.classList.add(column.isVisible() ? "fa-check-square" : "fa-square");
+
+            //build label
+            let label = document.createElement("span");
+            let title = document.createElement("span");
+
+            title.textContent = " " + column.getDefinition().title;
+
+            label.appendChild(icon);
+            label.appendChild(title);
+
+            //create menu item
+            menu.push({
+                label:label,
+                action:function(e){
+                    //prevent menu closing
+                    e.stopPropagation();
+
+                    //toggle current column visibility
+                    column.toggle();
+
+                    //change menu item icon
+                    if(column.isVisible()){
+                        icon.classList.remove("fa-square");
+                        icon.classList.add("fa-check-square");
+                    }else{
+                        icon.classList.remove("fa-check-square");
+                        icon.classList.add("fa-square");
+                    }
+                }
+            });
+        }
+
+        return menu;
+    };
+
+    console.log(data)
+    const table = new Tabulator("#example-table", {
+        height:"fit-content",
+        width: "fit-content",
+        responsiveLayout:true,
+        persistence:true,
+        persistenceID:"examplePerststance",
+        data: data,
+        columns:[
+            {title:"ID", field:"id", width:200,headerMenu:headerMenu},
+            {title:"Name", field:"name", width:100, sorter:"string"},
+            {title:"Designator", field:"designator"},
+        ],
+    });
+</script>
+|}
